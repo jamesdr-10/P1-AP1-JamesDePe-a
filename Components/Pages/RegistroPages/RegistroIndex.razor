@@ -1,0 +1,32 @@
+﻿@page "/Registro/Index"
+
+<PageTitle>Registro</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h5 class="card-title text-center">Registro</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                
+                <div class="col-4">
+                    <label class="col-form-label"><strong>Filtrar por</strong></label>
+                    <InputSelect class="form-select" @bind-Value="Filtro">
+                        <
+                    </InputSelect>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+    public string Filtro = string.Empty;
+
+}
