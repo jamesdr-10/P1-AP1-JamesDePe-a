@@ -14,6 +14,19 @@
         <div class="card-body">
 
             <div class="row">
+
+                <div class="col-4">
+                    <label class="col-form-label"><strong>Desde:</strong></label>
+                    <InputDate class="form-control" @bind-Value="FechaFiltroInicio"></InputDate>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-form-label"><strong>Hasta:</strong></label>
+                    <InputDate class="form-control" @bind-Value="FechaFiltroFin"></InputDate>
+                </div>
+            </div>
+
+            <div class="row">
                 
                 <div class="col-4">
                     <label class="col-form-label"><strong>Filtrar por</strong></label>
@@ -34,7 +47,6 @@
                     <InputSelect class="form-select" @bind-Value="Filtro">
                         <option value="" selected disabled>Elija una opción</option>
                         <option value="IdEntrada">IdEntrada</option>
-                        <option value="Fecha">Fecha</option>
                         <option value="NombreCliente">NombreCliente</option>
                         <option value="Cantidad">Cantidad</option>
                         <option value="Precio">Precio</option>
@@ -49,6 +61,11 @@
                     </div>
                 </div>
             </div>
+
+            @if (!string.IsNullOrEmpty(errorMensaje))
+            {
+                <div class="alert alert-danger mt-3">@errorMensaje</div>
+            }
 
             <table class="table table-hover table-striped">
                 <thead class="table text-dark">
@@ -94,6 +111,10 @@
 
     public string Filtro = string.Empty;
     public string ValorFiltro = string.Empty;
+    public DateTime? FechaFiltroInicio;
+    public DateTime? FechaFiltroFin;
+
+    public string? errorMensaje;
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,17 +123,96 @@
 
     public async Task Buscar()
     {
+        errorMensaje = string.Empty;
+
+        if ((FechaFiltroInicio == null && FechaFiltroFin != null) || (FechaFiltroInicio != null && FechaFiltroFin == null))
+        {
+            errorMensaje = "Debe seleccionar los dos rangos de fecha.";
+            return;
+        }
+
+        if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+        {
+            if (FechaFiltroInicio.Value.Date > FechaFiltroFin.Value.Date)
+            {
+                errorMensaje = "La fecha de inicio no puede ser mayor que la fecha de fin.";
+                return;
+            }
+
+            if (FechaFiltroFin.Value.Date < FechaFiltroInicio.Value.Date)
+            {
+                errorMensaje = "La fecha de fin no puede ser menor que la fecha de inicio.";
+                return;
+            }
+        }
+
+        if (string.IsNullOrEmpty(Filtro) && !string.IsNullOrEmpty(ValorFiltro))
+        {
+            errorMensaje = "Debe seleccionar un filtro.";
+            return;
+        }
+
         if (!string.IsNullOrEmpty(ValorFiltro))
         {
             if (Filtro == "IdEntrada" && int.TryParse(ValorFiltro, out int idEntrada))
             {
-                
+                if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada == idEntrada && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+                } else
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada == idEntrada);
+                }
+            } else if (Filtro == "NombreCliente")
+            {
+                if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.Contains(ValorFiltro) && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+                }
+                else
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.Contains(ValorFiltro));
+                }
+            } else if (Filtro == "Cantidad" && int.TryParse(ValorFiltro, out int cantidad)) 
+            {
+                if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.Cantidad == cantidad && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+                }
+                else
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.Cantidad == cantidad);
+                }
+            } else if (Filtro == "Precio" && double.TryParse(ValorFiltro, out double precio))
+            {
+                if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.Precio == precio && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+                }
+                else
+                {
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.Precio == precio);
+                }
+            } else
+            {
+                ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada > 0);
+            }
+        } else
+        {
+            if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
+            {
+                ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+            }
+            else
+            {
+                ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada > 0);
             }
         }
     }
 
     public async Task Restablecer()
     {
+        errorMensaje = string.Empty;
         Filtro = string.Empty;
         ValorFiltro = string.Empty;
         ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada > 0);
