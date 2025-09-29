@@ -1,0 +1,120 @@
+﻿@page "/EntradasHuacales/Index"
+
+@inject EntradasHuacalesServices entradasHuacalesServices
+
+@rendermode InteractiveServer
+
+<PageTitle>Registro de Entradas Huacales</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h5 class="card-title text-center">Registro de Entradas Huacales</h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+                
+                <div class="col-4">
+                    <label class="col-form-label"><strong>Filtrar por</strong></label>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-form-label"><strong>Búsqueda</strong></label>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end">
+                    <a href="/EntradasHuacales/Create" class="btn btn-primary bi bi-plus-square"> Crear</a>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-4">
+                    <InputSelect class="form-select" @bind-Value="Filtro">
+                        <option value="" selected disabled>Elija una opción</option>
+                        <option value="IdEntrada">IdEntrada</option>
+                        <option value="Fecha">Fecha</option>
+                        <option value="NombreCliente">NombreCliente</option>
+                        <option value="Cantidad">Cantidad</option>
+                        <option value="Precio">Precio</option>
+                    </InputSelect>
+                </div>
+
+                <div class="col-4">
+                    <div class="input-group">
+                        <InputText class="form-control" @bind-Value="ValorFiltro" placeholder="Buscar"></InputText>
+                        <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
+                        <button type="button" class="btn btn-outline-primary bi bi-arrow-clockwise" @onclick="Restablecer"></button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-hover table-striped">
+                <thead class="table text-dark">
+                    <tr>
+                        <th>ID Entrada</th>
+                        <th>Nombre Cliente</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Fecha</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var entradaHuacal in ListaEntradasHuacales)
+                    {
+                        <tr>
+                            <td>@entradaHuacal.IdEntrada</td>
+                            <td>@entradaHuacal.NombreCliente</td>
+                            <td>@entradaHuacal.Cantidad</td>
+                            <td>@entradaHuacal.Precio</td>
+                            <td>@entradaHuacal.Fecha.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="/EntradasHuacales/Edit/@entradaHuacal.IdEntrada" class="btn btn-outline-primary bi bi-pencil"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <label class="form-label">Conteo: @ListaEntradasHuacales.Count()</label>
+            <label class="form-label">Total: @ListaEntradasHuacales.Sum(e => e.Precio)</label>
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+    public List<EntradasHuacales> ListaEntradasHuacales { get; set; } = new List<EntradasHuacales>();
+
+    public string Filtro = string.Empty;
+    public string ValorFiltro = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada > 0);
+    }
+
+    public async Task Buscar()
+    {
+        if (!string.IsNullOrEmpty(ValorFiltro))
+        {
+            if (Filtro == "IdEntrada" && int.TryParse(ValorFiltro, out int idEntrada))
+            {
+                
+            }
+        }
+    }
+
+    public async Task Restablecer()
+    {
+        Filtro = string.Empty;
+        ValorFiltro = string.Empty;
+        ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.IdEntrada > 0);
+    }
+}
