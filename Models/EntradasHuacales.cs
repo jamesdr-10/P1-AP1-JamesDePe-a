@@ -2,7 +2,7 @@
 
 namespace P1_AP1_JamesDePeña.Models;
 
-public class Registro
+public class EntradasHuacales
 {
     [Key]
     public int RegistroId { get; set; }
