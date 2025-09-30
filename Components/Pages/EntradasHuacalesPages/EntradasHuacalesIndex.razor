@@ -138,12 +138,6 @@
                 errorMensaje = "La fecha de inicio no puede ser mayor que la fecha de fin.";
                 return;
             }
-
-            if (FechaFiltroFin.Value.Date < FechaFiltroInicio.Value.Date)
-            {
-                errorMensaje = "La fecha de fin no puede ser menor que la fecha de inicio.";
-                return;
-            }
         }
 
         if (string.IsNullOrEmpty(Filtro) && !string.IsNullOrEmpty(ValorFiltro))
@@ -167,11 +161,11 @@
             {
                 if (FechaFiltroInicio.HasValue && FechaFiltroFin.HasValue)
                 {
-                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.Contains(ValorFiltro) && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.ToLower().Contains(ValorFiltro.ToLower()) && e.Fecha.Date >= FechaFiltroInicio && e.Fecha.Date <= FechaFiltroFin);
                 }
                 else
                 {
-                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.Contains(ValorFiltro));
+                    ListaEntradasHuacales = await entradasHuacalesServices.Listar(e => e.NombreCliente.ToLower().Contains(ValorFiltro.ToLower()));
                 }
             } else if (Filtro == "Cantidad" && int.TryParse(ValorFiltro, out int cantidad)) 
             {
