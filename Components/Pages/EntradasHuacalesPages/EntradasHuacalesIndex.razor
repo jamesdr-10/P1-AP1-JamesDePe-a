@@ -17,11 +17,23 @@
 
                 <div class="col-4">
                     <label class="col-form-label"><strong>Desde:</strong></label>
-                    <InputDate class="form-control" @bind-Value="FechaFiltroInicio"></InputDate>
                 </div>
 
                 <div class="col-4">
                     <label class="col-form-label"><strong>Hasta:</strong></label>
+                </div>
+
+                <div class="col-4 d-flex justify-content-end">
+                    <a href="/EntradasHuacales/Create" class="btn btn-primary bi bi-plus-square"> Crear</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <InputDate class="form-control" @bind-Value="FechaFiltroInicio"></InputDate>
+                </div>
+
+                <div class="col-4">
                     <InputDate class="form-control" @bind-Value="FechaFiltroFin"></InputDate>
                 </div>
             </div>
@@ -34,10 +46,6 @@
 
                 <div class="col-4">
                     <label class="col-form-label"><strong>Búsqueda</strong></label>
-                </div>
-
-                <div class="col-4 d-flex justify-content-end">
-                    <a href="/EntradasHuacales/Create" class="btn btn-primary bi bi-plus-square"> Crear</a>
                 </div>
             </div>
 
