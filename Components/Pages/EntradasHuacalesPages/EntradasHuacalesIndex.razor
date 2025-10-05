@@ -82,6 +82,7 @@
                         <th>Nombre Cliente</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
+                        <th>Importe</th>
                         <th>Fecha</th>
                         <th>Opciones</th>
                     </tr>
@@ -95,6 +96,7 @@
                             <td>@entradaHuacal.NombreCliente</td>
                             <td>@entradaHuacal.Cantidad</td>
                             <td>@entradaHuacal.Precio</td>
+                            <td>@(entradaHuacal.Cantidad * entradaHuacal.Precio)</td>
                             <td>@entradaHuacal.Fecha.ToString("dd/MM/yyyy")</td>
                             <td>
                                 <a href="/EntradasHuacales/Edit/@entradaHuacal.IdEntrada" class="btn btn-outline-primary bi bi-pencil"></a>
@@ -106,8 +108,8 @@
         </div>
 
         <div class="card-footer d-flex justify-content-between">
-            <label class="form-label">Conteo: @ListaEntradasHuacales.Count()</label>
-            <label class="form-label">Total: @ListaEntradasHuacales.Sum(e => e.Precio)</label>
+            <label class="form-label">Cantidad: @ListaEntradasHuacales.Sum(e => e.Cantidad)</label>
+            <label class="form-label">Total: @ListaEntradasHuacales.Sum(e => e.Cantidad * e.Precio)</label>
         </div>
 
     </div>
