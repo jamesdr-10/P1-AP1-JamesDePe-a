@@ -44,7 +44,7 @@
                     <label class="col-form-label"><strong>Filtrar por</strong></label>
                 </div>
 
-                <div class="col-4">
+                <div class="col-5">
                     <label class="col-form-label"><strong>Búsqueda</strong></label>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     </InputSelect>
                 </div>
 
-                <div class="col-4">
+                <div class="col-5">
                     <div class="input-group">
                         <InputText class="form-control" @bind-Value="ValorFiltro" placeholder="Buscar"></InputText>
                         <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
@@ -75,36 +75,38 @@
                 <div class="alert alert-danger mt-3">@errorMensaje</div>
             }
 
-            <table class="table table-hover table-striped">
-                <thead class="table text-dark">
-                    <tr>
-                        <th>ID Entrada</th>
-                        <th>Nombre Cliente</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Importe</th>
-                        <th>Fecha</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var entradaHuacal in ListaEntradasHuacales)
-                    {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table text-dark">
                         <tr>
-                            <td>@entradaHuacal.IdEntrada</td>
-                            <td>@entradaHuacal.NombreCliente</td>
-                            <td>@entradaHuacal.Cantidad</td>
-                            <td>@entradaHuacal.Precio</td>
-                            <td>@(entradaHuacal.Cantidad * entradaHuacal.Precio)</td>
-                            <td>@entradaHuacal.Fecha.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                <a href="/EntradasHuacales/Edit/@entradaHuacal.IdEntrada" class="btn btn-outline-primary bi bi-pencil"></a>
-                            </td>
+                            <th>ID Entrada</th>
+                            <th>Nombre Cliente</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Importe</th>
+                            <th>Fecha</th>
+                            <th>Opciones</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var entradaHuacal in ListaEntradasHuacales)
+                        {
+                            <tr>
+                                <td>@entradaHuacal.IdEntrada</td>
+                                <td>@entradaHuacal.NombreCliente</td>
+                                <td>@entradaHuacal.Cantidad</td>
+                                <td>@entradaHuacal.Precio</td>
+                                <td>@(entradaHuacal.Cantidad* entradaHuacal.Precio)</td>
+                                <td>@entradaHuacal.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <a href="/EntradasHuacales/Edit/@entradaHuacal.IdEntrada" class="btn btn-outline-primary bi bi-pencil"></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="card-footer d-flex justify-content-between">
