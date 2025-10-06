@@ -25,39 +25,21 @@
 
             <div class="row">
 
-                <div class="col-6 col-md-4">
+                <div class="col-12 col-md-4">
                     <label class="col-form-label"><strong>Desde:</strong></label>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <label class="col-form-label"><strong>Hasta:</strong></label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6 col-md-4">
                     <InputDate class="form-control" @bind-Value="FechaFiltroInicio"></InputDate>
                 </div>
 
-                <div class="col-6 col-md-4">
+                <div class="col-12 col-md-4">
+                    <label class="col-form-label"><strong>Hasta:</strong></label>
                     <InputDate class="form-control" @bind-Value="FechaFiltroFin"></InputDate>
                 </div>
             </div>
 
             <div class="row">
                 
-                <div class="col-5 col-md-4">
+                <div class="col-12 col-md-4">
                     <label class="col-form-label"><strong>Filtrar por</strong></label>
-                </div>
-
-                <div class="col-7 col-md-4">
-                    <label class="col-form-label"><strong>Búsqueda</strong></label>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-5 col-md-4">
                     <InputSelect class="form-select" @bind-Value="Filtro">
                         <option value="" selected disabled>Elija una opción</option>
                         <option value="IdEntrada">IdEntrada</option>
@@ -67,7 +49,8 @@
                     </InputSelect>
                 </div>
 
-                <div class="col-7 col-md-4">
+                <div class="col-12 col-md-4">
+                    <label class="col-form-label"><strong>Búsqueda</strong></label>
                     <div class="input-group">
                         <InputText class="form-control" @bind-Value="ValorFiltro" placeholder="Buscar"></InputText>
                         <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
