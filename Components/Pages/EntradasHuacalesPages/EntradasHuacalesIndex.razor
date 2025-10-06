@@ -8,50 +8,56 @@
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header">
-            <h5 class="card-title text-center">Registro de Entradas Huacales</h5>
+            <div class="row align-items-center">
+
+                <div class="col-8 col-md-9">
+                    <h5 class="card-title">Registro de Entradas Huacales</h5>
+                </div>
+
+                <div class="col-4 col-md-3 d-flex justify-content-md-end">
+                    <a href="/EntradasHuacales/Create" class="btn btn-primary bi bi-plus-square"> Crear</a>
+                </div>
+
+            </div>
         </div>
 
         <div class="card-body">
 
             <div class="row">
 
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <label class="col-form-label"><strong>Desde:</strong></label>
                 </div>
 
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <label class="col-form-label"><strong>Hasta:</strong></label>
-                </div>
-
-                <div class="col-4 d-flex justify-content-end">
-                    <a href="/EntradasHuacales/Create" class="btn btn-primary bi bi-plus-square"> Crear</a>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <InputDate class="form-control" @bind-Value="FechaFiltroInicio"></InputDate>
                 </div>
 
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <InputDate class="form-control" @bind-Value="FechaFiltroFin"></InputDate>
                 </div>
             </div>
 
             <div class="row">
                 
-                <div class="col-4">
+                <div class="col-5 col-md-4">
                     <label class="col-form-label"><strong>Filtrar por</strong></label>
                 </div>
 
-                <div class="col-5">
+                <div class="col-7 col-md-4">
                     <label class="col-form-label"><strong>Búsqueda</strong></label>
                 </div>
             </div>
 
             <div class="row">
 
-                <div class="col-4">
+                <div class="col-5 col-md-4">
                     <InputSelect class="form-select" @bind-Value="Filtro">
                         <option value="" selected disabled>Elija una opción</option>
                         <option value="IdEntrada">IdEntrada</option>
@@ -61,7 +67,7 @@
                     </InputSelect>
                 </div>
 
-                <div class="col-5">
+                <div class="col-7 col-md-4">
                     <div class="input-group">
                         <InputText class="form-control" @bind-Value="ValorFiltro" placeholder="Buscar"></InputText>
                         <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
