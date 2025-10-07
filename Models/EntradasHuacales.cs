@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace P1_AP1_JamesDePeña.Models;
 
@@ -19,4 +20,7 @@ public class EntradasHuacales
 
     [Range(1, double.MaxValue, ErrorMessage = "El precio debe ser mayor que 0.")]
     public double Precio { get; set; }
+
+    [InverseProperty("EntradaHuacal")]
+    public virtual ICollection<EntradasHuacalesDetalle> EntradasHuacalesDetalle { get; set; } = new List<EntradasHuacalesDetalle>();
 }
